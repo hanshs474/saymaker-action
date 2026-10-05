@@ -1,0 +1,49 @@
+name: SayMaker AI Video and Image Generator
+description: Generate an image or a video clip in a workflow with SayMaker (Veo 3.1, Kling 3.0, Seedance 2.0, Nano Banana 2) on your API key
+author: SayMaker
+branding:
+  icon: film
+  color: purple
+inputs:
+  prompt:
+    description: What to make, or for an edit, what to change and what must stay
+    required: true
+  api-key:
+    description: "A key from https://saymaker.ai/settings/apikeys, passed from a secret: ${{ secrets.SAYMAKER_API_KEY }}"
+    required: true
+  media:
+    description: image or video
+    required: false
+    default: image
+  model:
+    description: "Model id. Empty uses saymaker-image-v1 for images (nano-banana-2-lite for edits) and minimax-h3-fast for video. E.g. gpt-image-2-5-flare, nano-banana-2, veo-3-1, kling-3-0, seedance-2"
+    required: false
+    default: ""
+  image-url:
+    description: Public http(s) url of an image to edit, or the first frame of a clip
+    required: false
+    default: ""
+  aspect-ratio:
+    description: 1:1, 16:9, 9:16, 4:3 or 3:4
+    required: false
+    default: ""
+  duration:
+    description: Clip length in seconds, where the model offers a choice
+    required: false
+    default: ""
+  output-path:
+    description: If set, the file is downloaded to this path in the workspace
+    required: false
+    default: ""
+  timeout-minutes:
+    description: Deadline for the whole call, including the free-account queue
+    required: false
+    default: "75"
+outputs:
+  url:
+    description: URL of the finished file
+  path:
+    description: Where the file was saved, if output-path was set
+runs:
+  using: node20
+  main: index.js
